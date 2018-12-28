@@ -12,6 +12,15 @@ namespace lab7
 {
     public partial class Form1 : Form
     {
+        unsafe struct SmallData
+        {
+            public fixed byte a[16];
+        }
+        unsafe struct BigData
+        {
+            public fixed byte a[102400];
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -27,10 +36,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 SmallData dat = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { dat.a[j] = (byte)j; }
-                }
                 smallList.AddFirst(dat);
             }
             resTime = Environment.TickCount - startTime;
@@ -40,10 +45,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             resTime = Environment.TickCount - startTime;
@@ -51,26 +52,12 @@ namespace lab7
                             "({1:f2} тиков). Ввод в BigList выполнен за {2:f2} сек. ({3:f2} тиков).",
                             (double)resFirst / 1000, resFirst, (double)resTime / 1000, resTime));
         }
-
-        unsafe struct SmallData
-        {
-            public fixed byte a[16];
-        }
-        unsafe struct BigData
-        {
-            public fixed byte a[102400];
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             LinkedList<SmallData> smallList = new LinkedList<SmallData>();
             for (int i = 0; i < 2500; i++)
             {
                 SmallData dat = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { dat.a[j] = (byte)j; }
-                }
                 smallList.AddFirst(dat);
             }
             int startTime, resTime, resFirst;
@@ -87,10 +74,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             startTime = Environment.TickCount;
@@ -115,10 +98,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 SmallData dat = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { dat.a[j] = (byte)j; }
-                }
                 smallList.AddFirst(dat);
             }
             while (smallList.First != null)
@@ -134,10 +113,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             while (BigList.First != null)
@@ -161,10 +136,6 @@ namespace lab7
             for(int i = 0; i<2500; i++)
             {
                 var d = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-;                }
                 smallList.AddFirst(d);
             }
             resTime = Environment.TickCount - startTime;
@@ -174,10 +145,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             resTime = Environment.TickCount - startTime;
@@ -185,17 +152,12 @@ namespace lab7
                             "({1:f2} тиков). Ввод в BigList выполнен за {2:f2} сек. ({3:f2} тиков).",
                             (double)resFirst / 1000, resFirst, (double)resTime / 1000, resTime));
         }
-
         private void button4_Click(object sender, EventArgs e)
         {
             LinkedList<SmallData> smallList = new LinkedList<SmallData>();
             for (int i = 0; i < 2500; i++)
             {
                 SmallData dat = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { dat.a[j] = (byte)j; }
-                }
                 smallList.AddFirst(dat);
             }
             int startTime, resTime, resFirst;
@@ -209,10 +171,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             startTime = Environment.TickCount;
@@ -235,9 +193,6 @@ namespace lab7
             {
                 SmallData dat = new SmallData();
                 for (int j = 0; j < 16; j++)
-                {
-                    unsafe { dat.a[j] = (byte)j; }
-                }
                 smallList.AddFirst(dat);
             }
             while (smallList.First != null)
@@ -250,10 +205,6 @@ namespace lab7
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
                 BigList.AddFirst(d);
             }
             while (BigList.First != null)
@@ -265,73 +216,23 @@ namespace lab7
                 "({1:f2} тиков). Взаимодействие с BigList выполнено за {2:f2} сек. ({3:f2} тиков).",
                 (double)resFirst / 1000, resFirst, (double)resTime / 1000, resTime));
         }
-
-        class ListNode<T>
-        {
-            public T data;
-            public ListNode<T> next;
-            
-        }
-
-        class MyList<T>
-        {
-            List<ListNode<T>> list = new List<ListNode<T>>();
-            public ListNode<T> first; 
-            public void AddFirst(ListNode<T> node)
-            {
-                list.Add(node);
-                node.next = first;
-                first = node;
-            }
-            public void Remove(ListNode<T> rem)
-            {
-                var a = first;
-                while (a != null)
-                {
-                    if (a == rem)
-                    {
-                        list.Remove(a);
-                        break;
-                    }
-                    a = a.next;
-                }
-                if (a != null)
-                {
-                    var b = new ListNode<T>() { data = default(T), next = first };
-                    while (!b.next.Equals(a))
-                    {
-                        b = b.next;
-                    }
-                    b.next = a.next;
-                }
-            }
-        }
-
         private void button8_Click(object sender, EventArgs e)
         {
-            MyList<SmallData> li = new MyList<SmallData>();
+            LinkedList<SmallData> li = new LinkedList<SmallData>();
             int startTime, resTime, resFirst;
             startTime = Environment.TickCount;
             for(int i = 0; i < 2500; i++)
             {
                 var d = new SmallData();
-                for(int j = 0; j<16; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                li.AddFirst(new ListNode<SmallData>() { data = d } );
+                li.AddFirst(d);
             }
             resFirst = Environment.TickCount - startTime;
-            MyList<BigData> BLi = new MyList<BigData>();
+            LinkedList<BigData> BLi = new LinkedList<BigData>();
             startTime = Environment.TickCount;
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                BLi.AddFirst(new ListNode<BigData>() { data = d });
+                BLi.AddFirst( d );
             }
             resTime = Environment.TickCount - startTime;
             MessageBox.Show(string.Format("Ввод в SmallList выполнен за {0:f2} сек. " +
@@ -341,41 +242,33 @@ namespace lab7
 
         private void button7_Click(object sender, EventArgs e)
         {
-            MyList<SmallData> li = new MyList<SmallData>();
+            LinkedList<SmallData> li = new LinkedList<SmallData>();
             int startTime, resTime, resFirst;
             for (int i = 0; i < 2500; i++)
             {
                 var d = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                li.AddFirst(new ListNode<SmallData>() { data = d });
+                li.AddFirst(d);
             }
-            var a = li.first;
+            var a = li.First;
             startTime = Environment.TickCount;
             while (a != null)
             {
                 li.Remove(a);
-                a = a.next;
+                a = a.Next;
             }
             resFirst = Environment.TickCount - startTime;
-            MyList<BigData> BLi = new MyList<BigData>();
+            LinkedList<BigData> BLi = new LinkedList<BigData>();
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                BLi.AddFirst(new ListNode<BigData>() { data = d });
+                BLi.AddFirst(d);
             }
-            var b = BLi.first;
+            var b = BLi.First;
             startTime = Environment.TickCount;
             while (b != null)
             {
                 BLi.Remove(b);
-                b = b.next;
+                b = b.Next;
             }
             resTime = Environment.TickCount - startTime;
             MessageBox.Show(string.Format("Удаление из SmallList выполнено за {0:f2} сек. " +
@@ -385,41 +278,33 @@ namespace lab7
 
         private void button9_Click(object sender, EventArgs e)
         {
-            MyList<SmallData> li = new MyList<SmallData>();
+            LinkedList<SmallData> li = new LinkedList<SmallData>();
             int startTime, resTime, resFirst;
             startTime = Environment.TickCount;
             for (int i = 0; i < 2500; i++)
             {
                 var d = new SmallData();
-                for (int j = 0; j < 16; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                li.AddFirst(new ListNode<SmallData>() { data = d });
+                li.AddFirst(d);
             }
-            var a = li.first;
+            var a = li.First;
             while (a != null)
             {
                 li.Remove(a);
-                a = a.next;
+                a = a.Next;
             }
             resFirst = Environment.TickCount - startTime;
-            MyList<BigData> BLi = new MyList<BigData>();
+            LinkedList<BigData> BLi = new LinkedList<BigData>();
             startTime = Environment.TickCount;
             for (int i = 0; i < 2500; i++)
             {
                 var d = new BigData();
-                for (int j = 0; j < 102400; j++)
-                {
-                    unsafe { d.a[j] = (byte)j; }
-                }
-                BLi.AddFirst(new ListNode<BigData>() { data = d });
+                BLi.AddFirst(d);
             }
-            var b = BLi.first;
+            var b = BLi.First;
             while (b != null)
             {
                 BLi.Remove(b);
-                b = b.next;
+                b = b.Next;
             }
             resTime = Environment.TickCount - startTime;
             MessageBox.Show(string.Format("Взаимодействие с SmallList выполнено за {0:f2} сек. " +
